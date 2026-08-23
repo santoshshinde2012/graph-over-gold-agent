@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: The article this repo accompanies
+    url: https://github.com/santoshshinde2012/blogs/tree/main/articles/016-graph-over-gold-agent
+    about: Design rationale, sources and the full walk-through live in the article.

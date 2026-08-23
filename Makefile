@@ -1,4 +1,7 @@
-.PHONY: setup test lint format typecheck check demo demo-json clean
+.PHONY: help setup test lint format typecheck check demo demo-json build clean
+
+help: ## Show this help
+	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
 
 PY ?= python3
 VENV ?= .venv
@@ -30,6 +33,10 @@ demo: ## Print the three-path comparison
 
 demo-json: ## Machine-readable summary only
 	$(BIN)/graph-over-gold --json
+
+build: ## Build sdist + wheel and check them
+	$(BIN)/python -m build
+	$(BIN)/twine check dist/*
 
 clean:
 	rm -rf $(VENV) .pytest_cache .mypy_cache .ruff_cache .coverage htmlcov build dist src/*.egg-info northwind_gold.db

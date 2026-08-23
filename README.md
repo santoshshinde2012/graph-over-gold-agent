@@ -28,23 +28,55 @@ one of them is safe to hand to an agent:
 
 ![Three paths, three answers](docs/images/three-paths.png)
 
-## Quick start
+## Requirements
+
+- **Python 3.11 or newer** (CI runs 3.11, 3.12, 3.13 and 3.14). Check with `python3 --version`.
+- macOS or Linux for `run_demo.sh` / `Makefile` (on Windows use WSL, or the manual install below).
+- Nothing else: no Databricks account, no API keys, no network calls — the demo runs against an
+  in-memory SQLite database seeded from the packaged CSVs. The Databricks notebook is optional.
+
+## Quick start (60 seconds)
 
 ```bash
 git clone https://github.com/santoshshinde2012/graph-over-gold-agent.git
 cd graph-over-gold-agent
-./run_demo.sh            # venv → install → tests → demo
+./run_demo.sh            # creates .venv → installs the package → runs the tests → prints the demo
 ```
 
-or, with a Python 3.11+ environment of your own:
+Manual install into an environment of your own (any OS):
 
 ```bash
-pip install -e ".[dev]"
-graph-over-gold          # the three-path comparison
-graph-over-gold --json   # machine-readable summary
-graph-over-gold --start 2025-10-01 --end 2025-12-31   # ask the same question about Q4 2025
-graph-over-gold --db-path northwind_gold.db           # keep the seeded Gold + graph tables to inspect
+python3 -m venv .venv && source .venv/bin/activate     # Windows: .venv\Scripts\activate
+pip install -e ".[dev]"                                # runtime + dev tools (ruff, mypy, pytest, build)
+graph-over-gold                                        # the three-path comparison
 ```
+
+Install straight from GitHub without cloning (runtime only):
+
+```bash
+pip install "git+https://github.com/santoshshinde2012/graph-over-gold-agent.git"
+graph-over-gold --version
+```
+
+### CLI
+
+```bash
+graph-over-gold                                       # text report (default window: Q2 2026)
+graph-over-gold --json                                # machine-readable summary only
+graph-over-gold --start 2025-10-01 --end 2025-12-31   # ask the same question about Q4 2025 → $45,000 (K1003)
+graph-over-gold --db-path northwind_gold.db           # keep the seeded Gold + graph tables in a SQLite file to inspect
+python -m graph_over_gold --help                      # same entry point, module form
+```
+
+### Verify your setup
+
+```bash
+make check     # ruff + mypy --strict + pytest (coverage gate 90%) — identical to CI
+make demo      # should end with "Graph tables written: graph_vertices, graph_edges" and exit 0
+```
+
+`graph-over-gold` exits `0` when the thesis held (governed route non-zero and every naive path
+disagrees with it) and `1` otherwise — so the demo is also a regression test.
 
 Exit code `0` means the thesis held (the governed route is non-zero and every naive path disagrees
 with it); `1` otherwise. Full expected output: [`docs/sample_output.txt`](docs/sample_output.txt).
@@ -104,8 +136,8 @@ src/graph_over_gold/
 ├── repository.py          # SqliteGoldRepository: seed CSVs, persist the projection (in-memory by default)
 ├── schema.py              # table → CSV map, default window (Q2 2026)
 ├── strategies/            # graph_path.py (governed), naive_current_owner.py, naive_all_history.py, rows.py
-└── data/*.csv             # synthetic Northwind SaaS seed (no PII) — same names as the notebook's Unity Catalog tables
-notebooks/graph_over_gold_graphframes.py   # Databricks notebook: same walk as a GraphFrames motif
+└── data/                  # synthetic Northwind SaaS seed CSVs (no PII) + schema README
+notebooks/                                 # Databricks notebook (same walk as a GraphFrames motif) + step-by-step README
 tests/                                     # pytest: three totals, graph shape, window injection, CLI, fakes
 docs/                                      # architecture (Mermaid + PNG), sample output
 ```
@@ -125,11 +157,27 @@ docs/                                      # architecture (Mermaid + PNG), sampl
 ## Development
 
 ```bash
+make help       # list targets
 make setup      # venv + editable install with dev extras
 make check      # ruff + mypy --strict + pytest --cov   (what CI runs on 3.11–3.14)
+make build      # sdist + wheel, twine-checked (CI also installs the wheel in a clean venv)
 make demo       # graph-over-gold
 pre-commit install   # optional: ruff + hygiene hooks on commit
 ```
+
+CI (`.github/workflows/ci.yml`) runs lint → type-check → tests → demo on four Python versions, then
+builds the package and installs the wheel in a clean virtualenv. Dependabot keeps pip and Actions
+versions current; see [`SECURITY.md`](SECURITY.md) for reporting issues.
+
+## Troubleshooting
+
+| Symptom | Fix |
+|---|---|
+| `./run_demo.sh` says "Python 3.11+ is required" | `PYTHON=/path/to/python3.12 ./run_demo.sh` (or install a newer Python) |
+| `graph-over-gold: command not found` after `pip install` | the venv is not active — `source .venv/bin/activate`; or run `python -m graph_over_gold` |
+| `ModuleNotFoundError: pandas` | you installed without the package — `pip install -e .` (or `-e ".[dev]"`) from the repo root |
+| numbers differ from the README | run `pytest -q`; if tests pass, you changed the seed CSVs or a filter — see `CONTRIBUTING.md` parity rule |
+| notebook fails with `graphframes` import error | use Databricks Runtime for ML or install the `io.graphframes:graphframes-spark3` JAR on the cluster — see [`notebooks/README.md`](notebooks/README.md) |
 
 ## Extending
 

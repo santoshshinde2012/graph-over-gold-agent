@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "graph-over-gold-agent"
-version = "1.0.0"
+dynamic = ["version"]
 description = "A knowledge graph over the Gold layer: governed multi-hop routes vs naive text-to-SQL, demonstrated end to end (Python + Databricks GraphFrames notebook)."
 readme = "README.md"
 license = { text = "MIT" }
@@ -27,6 +27,8 @@ dependencies = ["pandas>=2.2"]
 
 [project.optional-dependencies]
 dev = [
+  "build>=1.2",
+  "twine>=5.0",
   "pytest>=8.0",
   "pytest-cov>=5.0",
   "ruff>=0.6",
@@ -43,6 +45,9 @@ Homepage = "https://github.com/santoshshinde2012/graph-over-gold-agent"
 Repository = "https://github.com/santoshshinde2012/graph-over-gold-agent"
 Issues = "https://github.com/santoshshinde2012/graph-over-gold-agent/issues"
 Article = "https://github.com/santoshshinde2012/blogs/tree/main/articles/016-graph-over-gold-agent"
+
+[tool.setuptools.dynamic]
+version = { attr = "graph_over_gold.__version__" }
 
 [tool.setuptools.packages.find]
 where = ["src"]
