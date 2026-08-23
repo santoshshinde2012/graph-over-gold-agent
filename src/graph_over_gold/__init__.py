@@ -10,7 +10,7 @@ Gold layer (Northwind SaaS):
   (fails quietly: a plausible number from the wrong path).
 
 The CLI (``graph-over-gold``) prints the comparison; ``notebooks/`` runs the same walk
-as a GraphFrames motif on Databricks.
+as a GraphFrames motif on Databricks. Article: https://medium.com/@santosh-shinde/a-knowledge-graph-over-gold-what-multi-hop-questions-need-and-how-to-build-it-inside-databricks-a221bbbfad21
 """
 
 from __future__ import annotations

@@ -16,7 +16,7 @@ designed to. Ask it a question shaped like a **route** and something quieter hap
 A text-to-SQL model picks a join path, returns a number with a currency sign, and whether it is
 right depends on a choice nobody made out loud: which of several paths, through which bridge
 table, valid for which dates. This repository is the runnable companion to the article
-[*A Knowledge Graph Over Gold: What Multi-Hop Questions Need, and How to Build It Inside Databricks*](https://github.com/santoshshinde2012/blogs/tree/main/articles/016-graph-over-gold-agent).
+[*A Knowledge Graph Over Gold: What Multi-Hop Questions Need, and How to Build It Inside Databricks*](https://medium.com/@santosh-shinde/a-knowledge-graph-over-gold-what-multi-hop-questions-need-and-how-to-build-it-inside-databricks-a221bbbfad21) (Medium).
 It answers that one question **three ways over the same synthetic Gold layer** and shows why only
 one of them is safe to hand to an agent:
 
@@ -191,7 +191,7 @@ versions current; see [`SECURITY.md`](SECURITY.md) for reporting issues.
 
 ## Article & context
 
-- Article: [A Knowledge Graph Over Gold](https://github.com/santoshshinde2012/blogs/tree/main/articles/016-graph-over-gold-agent) — part of the *Databricks × Architecture × Data Science* series.
+- **Article (Medium):** [A Knowledge Graph Over Gold: What Multi-Hop Questions Need, and How to Build It Inside Databricks](https://medium.com/@santosh-shinde/a-knowledge-graph-over-gold-what-multi-hop-questions-need-and-how-to-build-it-inside-databricks-a221bbbfad21) — part of the *Databricks × Architecture × Data Science* series (research notes, sources and drafts: [series repo](https://github.com/santoshshinde2012/blogs/tree/main/articles/016-graph-over-gold-agent)).
 - Why the problem is real: SchemaScope's join-hop benchmark (accuracy above 80% at one hop, below 40% at four), FalkorDB's "missing link" bridge tables, and the "executable SQL with plausible numbers" failure described in the bounded-semantic-planning paper — all cited in the article.
 
 ## License

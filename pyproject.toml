@@ -44,7 +44,8 @@ graph-over-gold = "graph_over_gold.cli:main"
 Homepage = "https://github.com/santoshshinde2012/graph-over-gold-agent"
 Repository = "https://github.com/santoshshinde2012/graph-over-gold-agent"
 Issues = "https://github.com/santoshshinde2012/graph-over-gold-agent/issues"
-Article = "https://github.com/santoshshinde2012/blogs/tree/main/articles/016-graph-over-gold-agent"
+Article = "https://medium.com/@santosh-shinde/a-knowledge-graph-over-gold-what-multi-hop-questions-need-and-how-to-build-it-inside-databricks-a221bbbfad21"
+Series = "https://github.com/santoshshinde2012/blogs/tree/main/articles/016-graph-over-gold-agent"
 
 [tool.setuptools.dynamic]
 version = { attr = "graph_over_gold.__version__" }

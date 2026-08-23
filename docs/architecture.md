@@ -1,6 +1,6 @@
 # Architecture
 
-Three diagrams from the article, rendered beside their Mermaid source.
+Three diagrams from the article ([A Knowledge Graph Over Gold](https://medium.com/@santosh-shinde/a-knowledge-graph-over-gold-what-multi-hop-questions-need-and-how-to-build-it-inside-databricks-a221bbbfad21) on Medium), rendered beside their Mermaid source.
 
 ## 1. Gold → graph → agent, all inside Unity Catalog
 
