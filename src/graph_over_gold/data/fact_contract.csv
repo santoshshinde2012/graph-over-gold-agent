@@ -1,0 +1,6 @@
+contract_id,customer_id,arr_usd,status
+K1001,C001,120000,active
+K1002,C002,85000,active
+K1003,C001,45000,active
+K1004,C005,200000,active
+K1005,C003,90000,active

@@ -1,0 +1,94 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "graph-over-gold-agent"
+version = "1.0.0"
+description = "A knowledge graph over the Gold layer: governed multi-hop routes vs naive text-to-SQL, demonstrated end to end (Python + Databricks GraphFrames notebook)."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Santosh Shinde" }]
+requires-python = ">=3.11"
+keywords = ["databricks", "knowledge-graph", "text-to-sql", "graphframes", "unity-catalog", "data-architecture", "ai-agents", "lakehouse"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Database",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+]
+dependencies = ["pandas>=2.2"]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "pytest-cov>=5.0",
+  "ruff>=0.6",
+  "mypy>=1.11",
+  "pandas-stubs>=2.2",
+  "pre-commit>=3.7",
+]
+
+[project.scripts]
+graph-over-gold = "graph_over_gold.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/santoshshinde2012/graph-over-gold-agent"
+Repository = "https://github.com/santoshshinde2012/graph-over-gold-agent"
+Issues = "https://github.com/santoshshinde2012/graph-over-gold-agent/issues"
+Article = "https://github.com/santoshshinde2012/blogs/tree/main/articles/016-graph-over-gold-agent"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+graph_over_gold = ["data/*.csv", "py.typed"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+src = ["src", "tests"]
+# Databricks notebook source uses the runtime globals `spark` / `display` and top-of-cell imports.
+extend-exclude = ["notebooks"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "N", "RUF", "PT"]
+ignore = ["RUF001", "RUF002", "RUF003"]  # the demo text uses em dashes and arrows on purpose
+
+[tool.ruff.lint.isort]
+known-first-party = ["graph_over_gold"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+# 3.12 so third-party stubs that use PEP 695 `type` aliases (numpy) parse; runtime still supports 3.11.
+python_version = "3.12"
+strict = true
+mypy_path = "src"
+packages = ["graph_over_gold"]
+warn_unreachable = true
+
+[[tool.mypy.overrides]]
+module = ["tests.*"]
+disallow_untyped_decorators = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --strict-markers"
+pythonpath = ["src"]
+
+[tool.coverage.run]
+source = ["graph_over_gold"]
+branch = true
+omit = ["src/graph_over_gold/__main__.py"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 90

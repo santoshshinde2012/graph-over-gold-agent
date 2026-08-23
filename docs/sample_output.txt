@@ -1,0 +1,26 @@
+=== Northwind SaaS — ARR at risk (enterprise + churned + rep left last quarter) ===
+
+Governed route (OWNED_BY edge active in the window, rep left in the window):
+  Contracts matched: 3
+  Total ARR at risk: $405,000
+    Acme Corp / K1001 / $120,000 / rep Sam Rivera (left 2026-04-15)
+    GlobalTech / K1002 / $85,000 / rep Casey Morgan (left 2026-05-20)
+    Nova Systems / K1004 / $200,000 / rep Sam Rivera (left 2026-04-15)
+
+Naive path 1 — current owner only (is_current = 1):
+  Contracts matched: 0
+  Total ARR at risk: $0
+  ⚠ Under-counts by $405,000 vs governed route — fails loudly; the path never sees the departed owners.
+
+Naive path 2 — all assignment history, no time scoping:
+  Contracts matched: 4
+  Total ARR at risk: $450,000
+    Acme Corp / K1001 / $120,000 / rep Sam Rivera (left 2026-04-15)
+    GlobalTech / K1002 / $85,000 / rep Casey Morgan (left 2026-05-20)
+    Acme Corp / K1003 / $45,000 / rep Taylor Brooks (left 2025-11-30)
+    Nova Systems / K1004 / $200,000 / rep Sam Rivera (left 2026-04-15)
+  ⚠ Over-counts by $45,000 vs governed route — plausible number, wrong path.
+
+Graph tables written: graph_vertices, graph_edges
+
+JSON summary: {"governed": {"label": "Governed route (OWNED_BY edge active in the window, rep left in the window)", "total_arr": 405000, "contract_count": 3, "contracts": ["K1001", "K1002", "K1004"]}, "naive": [{"label": "Naive path 1 \u2014 current owner only (is_current = 1)", "total_arr": 0, "contract_count": 0, "delta_vs_governed": -405000}, {"label": "Naive path 2 \u2014 all assignment history, no time scoping", "total_arr": 450000, "contract_count": 4, "delta_vs_governed": 45000}], "all_naive_paths_differ": true}

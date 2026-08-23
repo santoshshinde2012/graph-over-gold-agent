@@ -1,0 +1,6 @@
+customer_id,segment,status,name
+C001,enterprise,churned,Acme Corp
+C002,enterprise,churned,GlobalTech
+C003,enterprise,active,StableCo
+C004,mid_market,churned,SmallBiz LLC
+C005,enterprise,churned,Nova Systems

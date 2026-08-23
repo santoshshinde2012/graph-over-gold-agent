@@ -1,0 +1,9 @@
+assignment_id,contract_id,rep_id,effective_from,effective_to,is_current
+A1,K1001,R102,2025-01-01,2026-06-30,false
+A2,K1001,R101,2026-07-01,,true
+A3,K1002,R103,2025-06-01,2026-06-30,false
+A4,K1002,R101,2026-07-01,,true
+A5,K1004,R102,2025-01-01,2026-06-30,false
+A6,K1004,R101,2026-07-01,,true
+A7,K1003,R105,2024-06-01,2025-11-30,false
+A8,K1003,R104,2025-12-01,,true
