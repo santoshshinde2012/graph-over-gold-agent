@@ -1,2 +1,2 @@
 # Runtime pin for reproducible local runs (pyproject.toml carries the loose bound: pandas>=2.2)
-pandas==3.0.6
+pandas==3.1.0
